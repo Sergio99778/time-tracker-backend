@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { ProjectsService } from './projects.service';
 import { CreateProjectDTO } from './dtos/createProject.dto';
 import { UpdateProjectDTO } from './dtos/updateProject.dto';
@@ -13,7 +21,7 @@ export class ProjectsController {
   }
 
   @Get(':id')
-  getProjectById(id: string) {
+  getProjectById(@Param('id') id: string) {
     return this.projectsService.getProjectById(id);
   }
 
@@ -28,12 +36,15 @@ export class ProjectsController {
   }
 
   @Put(':id')
-  updateProject(id: string, @Body() projectData: UpdateProjectDTO) {
+  updateProject(
+    @Param('id') id: string,
+    @Body() projectData: UpdateProjectDTO,
+  ) {
     return this.projectsService.updateProject(id, projectData);
   }
 
   @Delete(':id')
-  deleteProject(id: string) {
+  deleteProject(@Param('id') id: string) {
     return this.projectsService.deleteProject(id);
   }
 }

@@ -22,7 +22,7 @@ export class ProjectsService {
   }
 
   async getProjectById(id: string) {
-    const projects = await this.projectModel.findById(id).exec();
+    const projects = await this.projectModel.find({ id }).exec();
     if (!projects) {
       throw new NotFoundException('Project not found');
     }
