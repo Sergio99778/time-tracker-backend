@@ -3,6 +3,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Project, ProjectDocument } from './domain/project.model';
 import { Model } from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
+import { CreateProjectDTO } from './dtos/createProject.dto';
+import { UpdateProjectDTO } from './dtos/updateProject.dto';
 
 @Injectable()
 export class ProjectsService {
@@ -10,9 +12,9 @@ export class ProjectsService {
     @InjectModel(Project.name) private projectModel: Model<ProjectDocument>,
   ) {}
 
-  createProject(projectData: any) {
+  createProject(projectData: CreateProjectDTO) {
     const idProject = uuidv4();
-    return this.projectModel.create({ idProject, ...projectData });
+    return this.projectModel.create({ id: idProject, ...projectData });
   }
 
   async getProjects() {
@@ -27,7 +29,7 @@ export class ProjectsService {
     return projects;
   }
 
-  async updateProject(id: string, projectData: any) {
+  async updateProject(id: string, projectData: UpdateProjectDTO) {
     return this.projectModel.findByIdAndUpdate(id, projectData, { new: true });
   }
 
